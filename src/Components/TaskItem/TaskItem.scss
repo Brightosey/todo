@@ -1,0 +1,126 @@
+@use "../../Style/global" as *;
+@use "../../Style/mixins" as *;
+@use "../../Style/variables" as *;
+
+.task-item {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @include tablet {
+    padding: 1.25rem 1.5rem;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    flex: 1;
+  }
+
+  &__status {
+    font-size: 0.75rem;
+    text-transform: capitalize;
+    font-weight: 500;
+
+    &--pending {
+      color: #f59e0b;
+    }
+
+    &--in-progress {
+      color: #3b82f6;
+    }
+
+    &--completed {
+      color: #10b981;
+      text-decoration: line-through;
+    }
+  }
+
+  &__priority {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+
+    &--low {
+      background-color: #e0f2fe;
+      color: #0284c7;
+    }
+
+    &--medium {
+      background-color: #fef9c3;
+      color: #ca8a04;
+    }
+
+    &--high {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+
+    @include tablet {
+      gap: 1rem;
+    }
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &--change {
+      background-color: #eef2ff;
+      color: #4f46e5;
+
+      &:hover {
+        background-color: #e0e7ff;
+      }
+    }
+
+    &--delete {
+      background-color: #fee2e2;
+      color: #b91c1c;
+
+      &:hover {
+        background-color: #fecaca;
+      }
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
