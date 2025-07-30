@@ -1,12 +1,15 @@
 import "./TaskInput.scss";
 import { useState } from "react";
+import axios from "axios";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function TaskInput() {
   const [input, setInput] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
 
@@ -18,9 +21,14 @@ function TaskInput() {
       status: "pending",
     };
 
-    setInput("");
-    setDescription("");
-    setPriority("medium");
+    try {
+      await axios.post(`${backendUrl}/api/tasks`, newTask);
+      setInput("");
+      setDescription("");
+      setPriority("medium");
+    } catch (error) {
+      console.log({message:"Failed to post task", error});
+    }
   };
 
   return (

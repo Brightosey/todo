@@ -1,7 +1,8 @@
-import TaskInput from "./Components/TaskInput/TaskInput";
 import "./App.scss";
+import TaskInput from "./Components/TaskInput/TaskInput";
 import TaskItem from "./Components/TaskItem/TaskItem";
 import Calendar from "./Components/Calendar/Calendar";
+
 
 function App() {
   return (

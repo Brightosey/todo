@@ -3,124 +3,82 @@
 @use "../../Style/variables" as *;
 
 .task-item {
-  background-color: #ffffff;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 1rem;
-  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 0.75rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 
-  @include tablet {
-    padding: 1.25rem 1.5rem;
+  &:hover {
+    background-color: #f0f8ff;
+  }
+
+  &__empty {
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+    margin-top: 2rem;
   }
 
   &__header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 
   &__title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    flex: 1;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
   }
 
-  &__status {
-    font-size: 0.75rem;
-    text-transform: capitalize;
-    font-weight: 500;
-
-    &--pending {
-      color: #f59e0b;
-    }
-
-    &--in-progress {
-      color: #3b82f6;
-    }
-
-    &--completed {
-      color: #10b981;
-      text-decoration: line-through;
-    }
-  }
-
+  &__status,
   &__priority {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.5rem;
+    color: white;
     font-weight: 600;
     text-transform: capitalize;
-
-    &--low {
-      background-color: #e0f2fe;
-      color: #0284c7;
-    }
-
-    &--medium {
-      background-color: #fef9c3;
-      color: #ca8a04;
-    }
-
-    &--high {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
-  }
-
-  &__description {
-    font-size: 0.875rem;
-    color: #4b5563;
-    line-height: 1.5;
-  }
-
-  &__actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
+    margin-top: 0.3rem;
 
     @include tablet {
-      gap: 1rem;
+      margin-top: 0;
     }
   }
 
-  &__button {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background 0.2s ease;
+  &__status--pending {
+    background-color: #f59e0b; // amber
+  }
 
-    &--change {
-      background-color: #eef2ff;
-      color: #4f46e5;
+  &__status--in-progress {
+    background-color: #3b82f6; // blue
+  }
 
-      &:hover {
-        background-color: #e0e7ff;
-      }
-    }
+  &__status--completed {
+    background-color: #10b981; // green
+  }
 
-    &--delete {
-      background-color: #fee2e2;
-      color: #b91c1c;
+  &__priority--low {
+    background-color: #6b7280; // gray
+  }
 
-      &:hover {
-        background-color: #fecaca;
-      }
-    }
+  &__priority--medium {
+    background-color: #eab308; // yellow
+  }
 
-    img {
-      width: 16px;
-      height: 16px;
-    }
+  &__priority--high {
+    background-color: #ef4444; // red
   }
 }
