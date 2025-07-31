@@ -37,7 +37,6 @@ function TaskItem() {
   const fetchTask = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/tasks`);
-      console.log("Fetched tasks:", response.data);
       /* const sortedTask = [...response.data].sort((a, b) =>
         a.status.localeCompare(b.status)
       ); */
@@ -73,7 +72,7 @@ function TaskItem() {
   return (
     <>
       <ul>
-        {tasks.map((task) => (
+        {Array.isArray(tasks) && tasks.map((task) => (
           <li
             className="task-item"
             key={task.id}
