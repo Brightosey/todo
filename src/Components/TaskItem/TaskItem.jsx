@@ -37,10 +37,8 @@ function TaskItem() {
   const fetchTask = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/tasks`);
-      /* const sortedTask = [...response.data].sort((a, b) =>
-        a.status.localeCompare(b.status)
-      ); */
-      setTasks(response.data);
+      const taskData = response.data;
+      setTasks(taskData);
     } catch (error) {
       console.log("Error fetching tasks", error);
     } finally {
@@ -49,7 +47,6 @@ function TaskItem() {
   };
 
   useEffect(() => {
-    console.log("Selected task ID:", selectedTaskId);
     fetchTask();
   }, [selectedTaskId]);
 
@@ -72,27 +69,30 @@ function TaskItem() {
   return (
     <>
       <ul>
-        {Array.isArray(tasks) && tasks.map((task) => (
-          <li
-            className="task-item"
-            key={task.id}
-            onClick={() => setSelectedTaskId(task.id)}
-          >
-            <div className="task-item__header">
-              <p className="task-item__title">{task.title}</p>
-              <p
-                className={`task-item__status task-item__status--${task.status}`}
-              >
-                {task.status}
-              </p>
-              <p
-                className={`task-item__priority task-item__priority--${task.priority}`}
-              >
-                {task.priority}
-              </p>
-            </div>
-          </li>
-        ))}
+        {Array.isArray(tasks) &&
+          tasks.map((task) => (
+            <li
+              className="task-item"
+              key={task.id}
+              onClick={() => setSelectedTaskId(task.id)}
+            >
+              <div className="task-item__header">
+                <p className="task-item__title">{task.title}</p>
+                <div className="task-item__labels">
+                  <p
+                    className={`task-item__status task-item__status--${task.status}`}
+                  >
+                    {task.status}
+                  </p>
+                  <p
+                    className={`task-item__priority task-item__priority--${task.priority}`}
+                  >
+                    {task.priority}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
       </ul>
       {selectedTaskId && (
         <TaskDetailModal

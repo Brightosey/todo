@@ -1,19 +1,12 @@
 import "./Calendar.scss";
 import Calendar from "react-calendar";
-import { useState } from "react";
 
-function Calender() {
-  const [selectDate, setSelectDate] = useState(new Date());
-
-  const handleChange = (date) => {
-    setSelectDate(date);
-  };
-
+function Calender({ selectDate, onChange }) {
   return (
     <aside className="calendar">
       <h2 className="calendar__title">Calendar</h2>
       <div className="calendar__widget">
-        <Calendar onChange={handleChange} value={selectDate} />
+        <Calendar />
       </div>
     </aside>
   );

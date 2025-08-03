@@ -37,6 +37,17 @@
     }
   }
 
+  &__labels {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    @include tablet {
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+
   &__title {
     font-size: 1.2rem;
     font-weight: bold;

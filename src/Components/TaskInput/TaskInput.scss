@@ -49,11 +49,11 @@
   }
 
   &--description {
-    height: 80px;
+    height: 150px;
 
     @include tablet {
-      flex: 1 1 40%;
-      height: auto;
+      flex: 1 1 100%;
+      height: 20vh;
     }
   }
 }
