@@ -4,25 +4,11 @@ import axios from "axios";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-function TaskInput() {
+function TaskInput({ fetchTask }) {
   const [input, setInput] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
   const [status, setStatus] = useState("pending");
-  const [tasks, setTasks] = useState("");
-
-  const fetchTask = async () => {
-    try {
-      const response = await axios.get(`${backendUrl}/api/tasks`);
-      setTasks(response.data);
-    } catch (error) {
-      console.log({ message: "Error fetching task" });
-    }
-  };
-
-  useEffect(() => {
-    fetchTask();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,16 +19,17 @@ function TaskInput() {
       title: input,
       description,
       priority,
-      status: "pending",
+      status,
     };
 
     try {
       await axios.post(`${backendUrl}/api/tasks`, newTask);
+
       setInput("");
       setDescription("");
-      setPriority("medium");
+      setPriority("");
 
-      fetchTask();
+      fetchTask?.();
     } catch (error) {
       console.log({ message: "Failed to post task", error });
     }
@@ -68,26 +55,38 @@ function TaskInput() {
           className="task-input__field task-input__field--description"
         />
 
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="task-input__select"
-        >
-          <option value="pending">Pending</option>
-          <option value="in-progress">In Progress</option>
-          <option value="completed">Completed</option>
-        </select>
+        <div className="task-input__container">
+          <div className="task-input__group">
+            <label htmlFor="status" className="task-input__label">
+              Status
+            </label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="task-input__select"
+            >
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
 
-        <select
-          name="priority"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-          className="task-input__select"
-        >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </select>
+          <div className="task-input__group">
+            <label htmlFor="status" className="task-input__label">
+              Priority
+            </label>
+            <select
+              name="priority"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="task-input__select"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
 
         <button type="submit" className="task-input__button">
           Add

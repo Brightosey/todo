@@ -7,9 +7,7 @@ import TaskDetailModal from "../TaskDetailModal/TaskDetailModal";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-function TaskItem() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+function TaskItem({tasks, loading, fetchTask}) {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const toggleStatus = async (id) => {
@@ -34,21 +32,6 @@ function TaskItem() {
     }
   };
 
-  const fetchTask = async () => {
-    try {
-      const response = await axios.get(`${backendUrl}/api/tasks`);
-      const taskData = response.data;
-      setTasks(taskData);
-    } catch (error) {
-      console.log("Error fetching tasks", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTask();
-  }, [selectedTaskId]);
 
   const deleteTask = async (id) => {
     if (!tasks) return;
@@ -80,9 +63,9 @@ function TaskItem() {
                 <p className="task-item__title">{task.title}</p>
                 <div className="task-item__labels">
                   <p
-                    className={`task-item__status task-item__status--${task.status}`}
+                    className={`task-item__status task-item__status--${task.deadline}`}
                   >
-                    {task.status}
+                    {task.deadline}
                   </p>
                   <p
                     className={`task-item__priority task-item__priority--${task.priority}`}

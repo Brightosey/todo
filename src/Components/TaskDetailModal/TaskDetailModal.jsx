@@ -42,6 +42,7 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
       description: task.description,
       priority: task.priority,
       status: task.status,
+      deadline: task.deadline,
     };
     try {
       await axios.patch(`${backendUrl}/api/tasks/${taskId}`, editedTask);
@@ -53,56 +54,87 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
     }
   };
 
+  function formatForInput(val) {
+    if (!val) return "";
+    const d = new Date(val);
+    if (isNaN(d)) return "";
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
+      d.getDate()
+    )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
   if (loading) return <p className="task-detail__loading">Loading task...</p>;
 
   return (
     <div className="task-modal-overlay" onClick={onClose}>
       <div className="task-modal-content" onClick={(e) => e.stopPropagation()}>
         <section className="task-detail">
-          <h2>Edit Task</h2>
-
+          <h2>Task Details</h2>
           {error && <p className="task-detail__error">{error}</p>}
 
           <div className="task-detail__form">
-            <label htmlFor="title">Title</label>
-            <input
-              id="title"
-              type="text"
-              value={task.title || ""}
-              onChange={(e) => setTask({ ...task, title: e.target.value })}
-            />
+            {/* Title */}
+            <div className="task-detail__field">
+              <span className="task-detail__label">Title</span>
+              <input
+                type="text"
+                placeholder="Add a task title"
+                value={task.title || ""}
+                onChange={(e) => setTask({ ...task, title: e.target.value })}
+              />
+            </div>
 
-            <label htmlFor="status">Status</label>
-            <select
-              id="status"
-              value={task.status || "pending"}
-              onChange={(e) => setTask({ ...task, status: e.target.value })}
-            >
-              <option value="pending">Pending</option>
-              <option value="in-progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
+            {/* Status (your snippet) */}
+            <div className="task-detail__field">
+              <span className="task-detail__label">Status</span>
+              <select
+                id="status"
+                value={task.status || "pending"}
+                onChange={(e) => setTask({ ...task, status: e.target.value })}
+              >
+                <option value="pending">Pending</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
 
-            <label htmlFor="priority">Priority</label>
-            <select
-              id="priority"
-              type="text"
-              value={task.priority || ""}
-              onChange={(e) => setTask({ ...task, priority: e.target.value })}
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
+            {/* Priority */}
+            <div className="task-detail__field">
+              <span className="task-detail__label">Priority</span>
+              <select
+                value={task.priority || ""}
+                onChange={(e) => setTask({ ...task, priority: e.target.value })}
+              >
+                <option value="" disabled hidden>
+                  Select priority
+                </option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
 
-            <label htmlFor="description">Description</label>
-            <textarea
-              id="description"
-              value={task.description || ""}
-              onChange={(e) =>
-                setTask({ ...task, description: e.target.value })
-              }
-            />
+            <div className="task-detail__field">
+              <span className="task-detail__label">Deadline</span>
+              <input
+                type="datetime-local"
+                value={formatForInput(task.deadline)}
+                onChange={(e) => setTask({ ...task, deadline: e.target.value })}
+              />
+            </div>
+
+            {/* Comments */}
+            <div className="task-detail__field">
+              <span className="task-detail__label">Description</span>
+              <textarea
+                placeholder="Add any comments to your task"
+                value={task.description || ""}
+                onChange={(e) =>
+                  setTask({ ...task, description: e.target.value })
+                }
+              />
+            </div>
           </div>
 
           <div className="task-detail__actions">
@@ -114,7 +146,7 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
                 try {
                   onClose();
                 } catch (err) {
-                  console.error("❌ Error calling onClose:", err);
+                  console.error("Error calling onClose:", err);
                 }
               }}
             >
