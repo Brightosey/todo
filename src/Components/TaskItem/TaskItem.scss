@@ -54,7 +54,8 @@
     color: #333;
   }
 
-  &__status,
+  // Base styling shared between deadline and priority
+  &__deadline,
   &__priority {
     font-size: 0.9rem;
     padding: 0.25rem 0.6rem;
@@ -69,18 +70,7 @@
     }
   }
 
-  &__status--pending {
-    background-color: #f59e0b; // amber
-  }
-
-  &__status--in-progress {
-    background-color: #3b82f6; // blue
-  }
-
-  &__status--completed {
-    background-color: #10b981; // green
-  }
-
+  // 🟠 Priority levels
   &__priority--low {
     background-color: #6b7280; // gray
   }
@@ -91,5 +81,23 @@
 
   &__priority--high {
     background-color: #ef4444; // red
+  }
+
+  // 🔵 Status-based deadline coloring
+  &__deadline--pending {
+    background-color: #f59e0b; // amber
+  }
+
+  &__deadline--in-progress {
+    background-color: #3b82f6; // blue
+  }
+
+  &__deadline--completed {
+    background-color: #10b981; // green
+  }
+
+  // 🔴 Optional: Overdue deadline
+  &__deadline--overdue {
+    background-color: #dc2626;
   }
 }

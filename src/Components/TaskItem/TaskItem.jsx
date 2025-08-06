@@ -7,7 +7,7 @@ import TaskDetailModal from "../TaskDetailModal/TaskDetailModal";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-function TaskItem({tasks, loading, fetchTask}) {
+function TaskItem({ tasks, loading, fetchTask }) {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const toggleStatus = async (id) => {
@@ -31,7 +31,6 @@ function TaskItem({tasks, loading, fetchTask}) {
       console.log("Error patching task", error);
     }
   };
-
 
   const deleteTask = async (id) => {
     if (!tasks) return;
@@ -63,9 +62,11 @@ function TaskItem({tasks, loading, fetchTask}) {
                 <p className="task-item__title">{task.title}</p>
                 <div className="task-item__labels">
                   <p
-                    className={`task-item__status task-item__status--${task.deadline}`}
+                    className={`task-item__deadline task-item__deadline--${task.status}`}
                   >
-                    {task.deadline}
+                    {task.deadline
+                      ? new Date(task.deadline).toLocaleDateString()
+                      : "No deadline"}
                   </p>
                   <p
                     className={`task-item__priority task-item__priority--${task.priority}`}
