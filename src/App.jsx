@@ -2,6 +2,7 @@ import "./App.scss";
 import Header from "./Components/Header/Header";
 import TaskInput from "./Components/TaskInput/TaskInput";
 import TaskItem from "./Components/TaskItem/TaskItem";
+import Filter from "./Components/Filter/Filter";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -30,7 +31,11 @@ function App() {
       <section className="app__main">
         <Header />
         <TaskInput fetchTask={fetchTask} />
-        <TaskItem tasks={tasks} loading={loading} fetchTask={fetchTask} />
+        <Filter tasks={tasks} loading={loading} fetchTask={fetchTask} />
+        {/* <TaskInput fetchTask={fetchTask} /> */}
+        <div className="app__item">
+          {/* <TaskItem tasks={tasks} loading={loading} fetchTask={fetchTask} /> */}
+        </div>
       </section>
     </section>
   );

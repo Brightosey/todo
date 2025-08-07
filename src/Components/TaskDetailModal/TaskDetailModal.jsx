@@ -37,12 +37,19 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
   };
 
   const handleSave = async () => {
+
+    const formatDateForMySQL = (date) => {
+      if (!date) return null;
+      const d = new Date(date);
+      return d.toISOString().slice(0, 19).replace("T", " ");
+    };
+
     const editedTask = {
       title: task.title,
       description: task.description,
       priority: task.priority,
       status: task.status,
-      deadline: task.deadline,
+      deadline: formatDateForMySQL(task.deadline),
     };
     try {
       await axios.patch(`${backendUrl}/api/tasks/${taskId}`, editedTask);

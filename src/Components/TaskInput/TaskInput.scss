@@ -4,8 +4,22 @@
 
 .task-input {
   position: relative;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem auto;
   z-index: 1;
+  background-color: #f0f4f8;
+  border-radius: 2rem;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+  }
+
+  &__heading {
+    font-size: 2rem;
+  }
 
   &__open-btn {
     width: 100%;
