@@ -25,7 +25,6 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
   }, [taskId]);
 
   const handleDelete = async () => {
-    if (!task) return;
     try {
       await axios.delete(`${backendUrl}/api/tasks/${taskId}`);
       if (refreshTask) refreshTask();
@@ -37,7 +36,6 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
   };
 
   const handleSave = async () => {
-
     const formatDateForMySQL = (date) => {
       if (!date) return null;
       const d = new Date(date);
@@ -51,6 +49,7 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
       status: task.status,
       deadline: formatDateForMySQL(task.deadline),
     };
+
     try {
       await axios.patch(`${backendUrl}/api/tasks/${taskId}`, editedTask);
       if (refreshTask) refreshTask();
@@ -61,106 +60,84 @@ function TaskDetailModal({ onClose, taskId, refreshTask }) {
     }
   };
 
-  function formatForInput(val) {
+  const formatForInput = (val) => {
     if (!val) return "";
     const d = new Date(val);
     if (isNaN(d)) return "";
     const pad = (n) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
-      d.getDate()
-    )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  }
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
 
-  if (loading) return <p className="task-detail__loading">Loading task...</p>;
+  if (loading) return <p className="edit-task__loading">Loading task...</p>;
 
   return (
-    <div className="task-modal-overlay" onClick={onClose}>
-      <div className="task-modal-content" onClick={(e) => e.stopPropagation()}>
-        <section className="task-detail">
-          <h2>Task Details</h2>
-          {error && <p className="task-detail__error">{error}</p>}
+    <div className="edit-task__overlay" onClick={onClose}>
+      <div className="edit-task__modal" onClick={(e) => e.stopPropagation()}>
+        <button className="edit-task__close" onClick={onClose}>&times;</button>
+        <h2 className="edit-task__heading">Edit Task</h2>
 
-          <div className="task-detail__form">
-            {/* Title */}
-            <div className="task-detail__field">
-              <span className="task-detail__label">Title</span>
-              <input
-                type="text"
-                placeholder="Add a task title"
-                value={task.title || ""}
-                onChange={(e) => setTask({ ...task, title: e.target.value })}
-              />
-            </div>
+        {error && <p className="edit-task__error">{error}</p>}
 
-            {/* Status (your snippet) */}
-            <div className="task-detail__field">
-              <span className="task-detail__label">Status</span>
-              <select
-                id="status"
-                value={task.status || "pending"}
-                onChange={(e) => setTask({ ...task, status: e.target.value })}
-              >
-                <option value="pending">Pending</option>
-                <option value="in-progress">In Progress</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
-
-            {/* Priority */}
-            <div className="task-detail__field">
-              <span className="task-detail__label">Priority</span>
-              <select
-                value={task.priority || ""}
-                onChange={(e) => setTask({ ...task, priority: e.target.value })}
-              >
-                <option value="" disabled hidden>
-                  Select priority
-                </option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            </div>
-
-            <div className="task-detail__field">
-              <span className="task-detail__label">Deadline</span>
-              <input
-                type="datetime-local"
-                value={formatForInput(task.deadline)}
-                onChange={(e) => setTask({ ...task, deadline: e.target.value })}
-              />
-            </div>
-
-            {/* Comments */}
-            <div className="task-detail__field">
-              <span className="task-detail__label">Description</span>
-              <textarea
-                placeholder="Add any comments to your task"
-                value={task.description || ""}
-                onChange={(e) =>
-                  setTask({ ...task, description: e.target.value })
-                }
-              />
-            </div>
+        <form className="edit-task__form">
+          <div className="edit-task__form-field">
+            <label className="edit-task__form-field--label">Title</label>
+            <input
+              type="text"
+              value={task.title || ""}
+              onChange={(e) => setTask({ ...task, title: e.target.value })}
+              placeholder="Task title"
+            />
           </div>
 
-          <div className="task-detail__actions">
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleDelete}>Delete</button>
-            <button
-              onClick={() => {
-                console.log("🟡 Back clicked");
-                try {
-                  onClose();
-                } catch (err) {
-                  console.error("Error calling onClose:", err);
-                }
-              }}
+          <div className="edit-task__form-field">
+            <label className="edit-task__form-field--label">Status</label>
+            <select
+              value={task.status || "pending"}
+              onChange={(e) => setTask({ ...task, status: e.target.value })}
             >
-              Back
-            </button>
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
           </div>
-        </section>
+
+          <div className="edit-task__form-field">
+            <label className="edit-task__form-field--label">Priority</label>
+            <select
+              value={task.priority || ""}
+              onChange={(e) => setTask({ ...task, priority: e.target.value })}
+            >
+              <option value="" disabled hidden>Select priority</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div className="edit-task__form-field">
+            <label className="edit-task__form-field--label">Deadline</label>
+            <input
+              type="datetime-local"
+              value={formatForInput(task.deadline)}
+              onChange={(e) => setTask({ ...task, deadline: e.target.value })}
+            />
+          </div>
+
+          <div className="edit-task__form-field">
+            <label className="edit-task__form-field--label">Description</label>
+            <textarea
+              value={task.description || ""}
+              placeholder="Add details or notes"
+              onChange={(e) => setTask({ ...task, description: e.target.value })}
+            />
+          </div>
+        </form>
+
+        <div className="edit-task__actions">
+          <button type="button" onClick={handleSave}>Save</button>
+          <button type="button" onClick={handleDelete}>Delete</button>
+          <button type="button" onClick={onClose}>Back</button>
+        </div>
       </div>
     </div>
   );

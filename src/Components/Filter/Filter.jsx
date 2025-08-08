@@ -2,7 +2,7 @@ import "./Filter.scss";
 import { useState } from "react";
 import TaskItem from "../TaskItem/TaskItem";
 
-function Filter({ tasks }) {
+function Filter({ tasks, loading, fetchTask }) {
   const [filter, setFilter] = useState("all");
 
   const categories = ["all", "pending", "in-progress", "completed"];
@@ -30,7 +30,12 @@ function Filter({ tasks }) {
         {filterTask.length === 0 ? (
           <p className="filter__empty">No Task Found.</p>
         ) : (
-         <TaskItem tasks={filterTask} />
+          <TaskItem
+            className="filter__task"
+            tasks={filterTask}
+            loading={loading}
+            fetchTask={fetchTask}
+          />
         )}
       </div>
     </section>

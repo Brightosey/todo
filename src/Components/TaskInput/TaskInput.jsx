@@ -35,6 +35,8 @@ function TaskInput({ fetchTask }) {
       setPriority("");
 
       fetchTask?.();
+
+      setShowForm(false);
     } catch (error) {
       console.log({ message: "Failed to post task", error });
     }

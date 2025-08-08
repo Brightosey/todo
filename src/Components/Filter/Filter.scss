@@ -7,32 +7,21 @@
   margin-top: 1rem;
 
   &__tabs {
-    background-color: #f0f4f8;
     display: flex;
     flex-wrap: wrap;
-   /*  gap: 0.5rem; */
     justify-content: center;
     margin-bottom: 1.5rem;
-
-    @include tablet {
-      /* justify-content: flex-start; */
-    }
-
-    @include desktop {
-      gap: 1rem;
-    }
   }
 
   &__tab {
     padding: 1.5rem;
     border: 1px solid #ccc;
     background-color: white;
-    /* border-radius: px; */
     font-weight: bold;
     font-size: 1rem;
     color: #333;
     transition: all 0.2s ease;
-    
+
     &:hover {
       background-color: #f0f0f0;
       cursor: pointer;
@@ -46,17 +35,25 @@
   }
 
   &__tasks {
-    display: flex;
     justify-content: center;
-    gap: 1rem;
+    background-color: aqua;
+    margin: 4rem 0;
+    border-radius: 1rem;
+    z-index: 1000;
+    padding: 2rem;
+    margin: 1rem;
 
-    /* @include tablet {
-      grid-template-columns: repeat(2, 1fr);
+    @include tablet {
+        margin: 2rem;
     }
+  }
 
-    @include desktop {
-      grid-template-columns: repeat(3, 1fr);
-    } */
+  &__task {
+    background-color: aqua;
+    margin: 4rem 0;
+    z-index: 1000;
+    padding: 2rem;
+    margin: 2rem;
   }
 
   &__empty {

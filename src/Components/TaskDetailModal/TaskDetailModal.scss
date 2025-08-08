@@ -2,43 +2,52 @@
 @use "../../Style/mixins" as *;
 @use "../../Style/variables" as *;
 
-.task-modal {
-  &-overlay {
+.edit-task {
+  &__overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+  }
+
+  &__modal {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  &-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 90%;
-    max-height: 90vh;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 95%;
+    max-width: 600px;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    z-index: 20;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
     overflow-y: auto;
+    max-height: 90vh;
+
+    @include tablet {
+      padding: 2rem;
+    }
   }
-}
 
-.task-detail {
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  background-color: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", sans-serif;
-
-  h2 {
+  &__heading {
     text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    color: #222;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  &__close {
+    align-self: flex-end;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
   }
 
   &__error {
@@ -46,8 +55,8 @@
     color: #b91c1c;
     padding: 0.75rem;
     border-radius: 0.5rem;
-    margin-bottom: 1rem;
     font-weight: 500;
+    text-align: center;
   }
 
   &__form {
@@ -55,43 +64,37 @@
     flex-direction: column;
     gap: 1rem;
 
-    label {
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: #333;
-    }
-
-    input,
-    select,
-    textarea {
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      font-family: inherit;
-
-      &:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-      }
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 150px;
-    }
-
     @include tablet {
-      grid-template-columns: 1fr 1fr;
-      display: grid;
-      gap: 1.5rem 2rem;
+      gap: 1.5rem;
+    }
 
-      label,
+    &-field {
+      display: flex;
+      flex-direction: column;
+
       input,
-      select,
+      textarea,
+      select {
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+      }
+
       textarea {
-        grid-column: span 2;
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      &--label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
       }
     }
   }
@@ -99,8 +102,8 @@
   &__actions {
     display: flex;
     justify-content: space-between;
-    gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    gap: 1rem;
     flex-wrap: wrap;
 
     button {
@@ -109,46 +112,40 @@
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-    }
 
-    button:nth-child(1) {
-      background-color: #3b82f6;
-      color: white;
+      &:nth-child(1) {
+        background-color: #2196f3;
+        color: white;
 
-      &:hover {
-        background-color: #2563eb;
+        &:hover {
+          background-color: #1976d2;
+        }
       }
-    }
 
-    button:nth-child(2) {
-      background-color: #ef4444;
-      color: white;
+      &:nth-child(2) {
+        background-color: #ef4444;
+        color: white;
 
-      &:hover {
-        background-color: #dc2626;
+        &:hover {
+          background-color: #dc2626;
+        }
       }
-    }
 
-    button:nth-child(3) {
-      background-color: #6b7280;
-      color: white;
+      &:nth-child(3) {
+        background-color: #6b7280;
+        color: white;
 
-      &:hover {
-        background-color: #4b5563;
+        &:hover {
+          background-color: #4b5563;
+        }
       }
     }
 
     @include tablet {
       justify-content: flex-end;
-    }
-
-    @include desktop {
-      button {
-        max-width: 180px;
-      }
     }
   }
 }
