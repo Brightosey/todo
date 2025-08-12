@@ -14,8 +14,16 @@ function TaskInput({ fetchTask }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim() || !priority || !status) {
-      alert("please select a priority");
+    if (!input.trim()) {
+      alert("Please enter a task title");
+      return;
+    }
+    if (!priority) {
+      alert("Please select a priority");
+      return;
+    }
+    if (!status) {
+      alert("Please select a status");
       return;
     }
 
@@ -29,10 +37,13 @@ function TaskInput({ fetchTask }) {
 
     try {
       await axios.post(`${backendUrl}/api/tasks`, newTask);
+      console.log({ message: "post request", newTask });
 
       setInput("");
       setDescription("");
       setPriority("");
+      setStatus("");
+      setDeadline("");
 
       fetchTask?.();
 
